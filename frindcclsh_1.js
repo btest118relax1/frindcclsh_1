@@ -14,7 +14,7 @@ client.on('ready', () => {
   console.log('---------------')
 });
  
-const prefix = "1"
+const prefix = "s"
 client.on('message', async msg => {
     if (msg.author.bot) return undefined;
    
@@ -257,7 +257,7 @@ ${prefix}queue ⇏ لمعرفة قآئمة التشغيل
  
  
 client.on('message', function(message) {
-    const myID = "385529907226345482";
+    const myID = "456626501182291978";
     let args = message.content.split(" ").slice(1).join(" ");
     if(message.content.startsWith(prefix + "setname")) {
                 if(message.author.id !== myID) return;
@@ -315,7 +315,7 @@ client.on('message', function(message) {
  
 client.on('message', async message => {
             if(!message.channel.guild) return;
-             if (message.content.startsWith("1")) {
+             if (message.content.startsWith("s")) {
 let args = message.content.split(' ').slice(1).join(' ');
             let sigMessage = await args;
            
@@ -345,7 +345,7 @@ let args = message.content.split(' ').slice(1).join(' ');
   client.on('message', message => {
   if (!message.guild) return;
  
-  if (message.content === '1join') {
+  if (message.content === 'sjoin') {
     if (message.member.voiceChannel) {
       message.member.voiceChannel.join()
         .then(connection => {
@@ -356,3 +356,6 @@ let args = message.content.split(' ').slice(1).join(' ');
     }
   }
 });
+
+   
+client.login(process.env.BOT_TOKEN);
