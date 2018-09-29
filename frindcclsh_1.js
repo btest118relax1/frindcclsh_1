@@ -14,7 +14,7 @@ client.on('ready', () => {
   console.log('---------------')
 });
  
-const prefix = "s"
+const prefix = "1"
 client.on('message', async msg => {
     if (msg.author.bot) return undefined;
    
@@ -65,7 +65,7 @@ client.on('message', async msg => {
                     .setDescription(`**الرجآء من حضرتك إختيآر رقم المقطع** :
 ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
  
-                    .setFooter("-")
+                    .setFooter("BY: الـجنـرال#2666")
                     msg.channel.sendEmbed(embed1).then(message =>{message.delete(20000)})
                    
                     // eslint-disable-next-line max-depth
@@ -234,7 +234,7 @@ if (message.content.startsWith(adminprefix + 'setT')) {
 client.on("message", message => {
  if (message.content === `${prefix}help`) {
   const embed = new Discord.RichEmbed()
-      .setColor("#000000")
+      .setColor("RANDOM")
       .setDescription(`
 ${prefix}join ⇏ لدخول البوت الروم
 ${prefix}play ⇏ لتشغيل أغنية برآبط أو بأسم
@@ -257,7 +257,7 @@ ${prefix}queue ⇏ لمعرفة قآئمة التشغيل
  
  
 client.on('message', function(message) {
-    const myID = "456626501182291978";
+    const myID = "385529907226345482";
     let args = message.content.split(" ").slice(1).join(" ");
     if(message.content.startsWith(prefix + "setname")) {
                 if(message.author.id !== myID) return;
@@ -315,7 +315,7 @@ client.on('message', function(message) {
  
 client.on('message', async message => {
             if(!message.channel.guild) return;
-             if (message.content.startsWith("s")) {
+             if (message.content.startsWith("1")) {
 let args = message.content.split(' ').slice(1).join(' ');
             let sigMessage = await args;
            
@@ -345,7 +345,7 @@ let args = message.content.split(' ').slice(1).join(' ');
   client.on('message', message => {
   if (!message.guild) return;
  
-  if (message.content === 'sjoin') {
+  if (message.content === '1join') {
     if (message.member.voiceChannel) {
       message.member.voiceChannel.join()
         .then(connection => {
