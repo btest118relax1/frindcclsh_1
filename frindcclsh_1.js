@@ -30,7 +30,7 @@ var now_playing = [];
 const prefix = "1"
 client.on('message', function(message) {
     const member = message.member;
-    const mess = message.content.toLowerCase();
+    const message = message.content.toLowerCase();
     const args = message.content.split(' ').slice(1).join(' ');
  
     if (message.startsWith(prefix + 'play')) {
