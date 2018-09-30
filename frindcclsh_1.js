@@ -14,19 +14,26 @@ client.on('ready', () => {
   console.log('---------------')
 });
  
+
+var servers = [];
+var queue = [];
+var guilds = [];
+var queueNames = [];
+var isPlaying = false;
+var dispatcher = null;
+var voiceChannel = null;
+var skipReq = 0;
+var skippers = [];
+var now_playing = [];
+
+
+
+
 const prefix = "1"
-client.on('message', async msg => {
-    if (msg.author.bot) return undefined;
-   
-    if (!msg.content.startsWith(prefix)) return undefined;
-    const args = msg.content.split(' ');
-    const searchString = args.slice(1).join(' ');
-   
-    const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
-    const serverQueue = queue.get(msg.guild.id);
- 
-    let command = msg.content.toLowerCase().split(" ")[0];
-    command = command.slice(prefix.length)
+client.on('message', function(message) {
+    const member = message.member;
+    const mess = message.content.toLowerCase();
+    const args = message.content.split(' ').slice(1).join(' ');
  
     if (message.startsWith(prefix + 'play')) {
         if (!message.member.voiceChannel) return message.channel.send('You must be in my audio room :microphone2:');
