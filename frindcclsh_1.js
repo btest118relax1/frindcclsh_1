@@ -66,7 +66,7 @@ client.on('message', async msg => {
 ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
  
                     .setFooter("BY: الـجنـرال#2666")
-                    msg.channel.sendEmbed(embed1).then(message =>{message.delete(3000)})
+                    msg.channel.sendEmbed(embed1).then(message =>{message.delete(2000)})
                    
                     // eslint-disable-next-line max-depth
                     try {
