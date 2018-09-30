@@ -28,65 +28,39 @@ client.on('message', async msg => {
     let command = msg.content.toLowerCase().split(" ")[0];
     command = command.slice(prefix.length)
  
-    if (command === `play`) {
-        const voiceChannel = msg.member.voiceChannel;
-        if (!voiceChannel) return msg.channel.send('يجب توآجد حضرتك بروم صوتي .');
-        const permissions = voiceChannel.permissionsFor(msg.client.user);
-        if (!permissions.has('CONNECT')) {
-           
-            return msg.channel.send('لا يتوآجد لدي صلاحية للتكلم بهذآ الروم');
+    if (message.startsWith(prefix + 'play')) {
+        if (!message.member.voiceChannel) return message.channel.send('You must be in my audio room :microphone2:');
+        // if user is not insert the URL or song title
+        if (args.length == 0) {
+message.channel.send('Add a song name or song link :drum: ')
+            return;
         }
-        if (!permissions.has('SPEAK')) {
-            return msg.channel.send('لا يتوآجد لدي صلاحية للتكلم بهذآ الروم');
+        if (queue.length > 0 || isPlaying) {
+            getID(args, function(id) {
+                add_to_queue(id);
+                fetchVideoInfo(id, function(err, videoInfo) {
+                    if (err) throw new Error(err);
+message.channel.send(`aded : **( ${videoInfo.title} )** on the list :musical_note:`)
+                    queueNames.push(videoInfo.title);
+                    now_playing.push(videoInfo.title);
+
+                });
+            });
         }
- 
-        if (!permissions.has('EMBED_LINKS')) {
-            return msg.channel.sendMessage("**يجب توآفر برمشن `EMBED LINKS`لدي **")
+        else {
+
+            isPlaying = true;
+            getID(args, function(id) {
+                queue.push('placeholder');
+                playMusic(id, message);
+                fetchVideoInfo(id, function(err, videoInfo) {
+                    if (err) throw new Error(err);
+message.channel.send(`Now playing : **( ${videoInfo.title} )** :musical_note: `)
+                    // client.user.setGame(videoInfo.title,'https://www.twitch.tv/Abdulmohsen');
+                });
+            });
         }
- 
-        if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
-            const playlist = await youtube.getPlaylist(url);
-            const videos = await playlist.getVideos();
-           
-            for (const video of Object.values(videos)) {
-                const video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
-                await handleVideo(video2, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
-            }
-            return msg.channel.send(` **${playlist.title}** تم الإضآفة إلى قأئمة التشغيل`);
-        } else {
-            try {
- 
-                var video = await youtube.getVideo(url);
-            } catch (error) {
-                try {
-                    var videos = await youtube.searchVideos(searchString, 5);
-                    let index = 0;
-                    const embed1 = new Discord.RichEmbed()
-                    .setDescription(`**الرجآء من حضرتك إختيآر رقم المقطع** :
-${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
- 
-                    .setFooter("BY: الـجنـرال#2666")
-                    msg.channel.sendEmbed(embed1).then(message =>{message.delete(2000)})
-                   
-                    // eslint-disable-next-line max-depth
-                    try {
-                        var response = await msg.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
-                            maxMatches: 1,
-                            time: 15000,
-                            errors: ['time']
-                        });
-                    } catch (err) {
-                        console.error(err);
-                    }
-                    const videoIndex = parseInt(response.first().content);
-                    var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
-                } catch (err) {
-                    console.error(err);
-                }
-            }
- 
-            return handleVideo(video, msg, voiceChannel);
-        }
+    
     } else if (command === `skip`) {
         if (!msg.member.voiceChannel) return msg.channel.send('أنت لست بروم صوتي .');
         if (!serverQueue) return msg.channel.send('لا يتوفر مقطع لتجآوزه');
