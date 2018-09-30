@@ -66,7 +66,7 @@ client.on('message', async msg => {
 ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
  
                     .setFooter("BY: الـجنـرال#2666")
-                    msg.channel.sendEmbed(embed1).then(message =>{message.delete(20000)})
+                    msg.channel.sendEmbed(embed1).then(message =>{message.delete(5000)})
                    
                     // eslint-disable-next-line max-depth
                     try {
@@ -82,7 +82,6 @@ ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
                     var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
                 } catch (err) {
                     console.error(err);
-                    return msg.channel.send(':X: لا يتوفر نتآئج بحث ');
                 }
             }
  
