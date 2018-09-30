@@ -16,8 +16,6 @@ client.on('ready', () => {
  
 
 var servers = [];
-var queue = [];
-var guilds = [];
 var queueNames = [];
 var isPlaying = false;
 var dispatcher = null;
